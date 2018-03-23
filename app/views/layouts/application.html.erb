@@ -2,13 +2,24 @@
 <html>
   <head>
     <title>Movies</title>
+    <meta name="description" content="Sample Application in Rails">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="author" content="@blj">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="w-100 sans-serif">
+    <%= render partial: 'layouts/header' %>
+    <main class="w-100 bt b--black-10 bg-white ph3 ph5-ns">
+        <%= yield %>
+    </main>
+    <footer class="bg-white black-70 ph3 ph5-ns pv5 pv6-ns bt b--black-10">
+        <p>(c) Copyright 2018 Balaji Raghavan. All Rights Reserved. </p>
+    </footer>
   </body>
 </html>
