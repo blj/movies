@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Movies</title>
+    <title><%= content_for(:title) || 'Movies' %></title>
     <meta name="description" content="Sample Application in Rails">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -12,14 +12,11 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
-
   <body class="w-100 sans-serif">
     <%= render partial: 'layouts/header' %>
     <main class="w-100 bt b--black-10 bg-white ph3 ph5-ns">
         <%= yield %>
     </main>
-    <footer class="bg-white black-70 ph3 ph5-ns pv5 pv6-ns bt b--black-10">
-        <p>(c) Copyright 2018 Balaji Raghavan. All Rights Reserved. </p>
-    </footer>
+    <%= render partial: 'layouts/footer' %>
   </body>
 </html>
