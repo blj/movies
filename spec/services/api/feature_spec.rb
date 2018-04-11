@@ -3,18 +3,21 @@
 require 'rails_helper'
 
 describe 'Feature' do
-  it 'loads returns all movie ids in an array' do
-    VCR.use_cassette 'features' do
-      feature_ids = API::Feature.ids
-      expect(feature_ids).kind_of? Array
-      expect(feature_ids[0]).kind_of? Integer
+  let(:feature_ids) {
+    VCR.use_cassette('features') do
+      API::Feature.ids
     end
-  end
-  it 'loads an individual feature from given an id' do
+  }
+  let(:a_feature) {
     VCR.use_cassette 'features[0]' do
-      feature_ids = API::Feature.ids
       a_feature = API::Feature.get(feature_ids[0])
-      expect(a_feature).to include("id", "title", "release", "director", "cast")
     end
+  }
+  it 'loads id of all movies in an array' do
+    expect(feature_ids).kind_of? Array
+    expect(feature_ids[0]).kind_of? Integer
+  end
+  it 'loads an individual feature for an id' do
+    expect(a_feature).to include("id", "title", "release", "director", "cast")
   end
 end
