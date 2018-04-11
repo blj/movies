@@ -1,6 +1,6 @@
 class Feature 
   include ActiveModel::Model
-  attr_accessor :id, :title, :release, :director, :cast
+  attr_accessor :id, :title, :release, :director_id, :actor_ids, :director, :actors 
   def self.all
     API::Feature.ids.map do |feature_id|
       find(feature_id)

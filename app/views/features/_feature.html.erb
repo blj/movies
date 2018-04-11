@@ -1,6 +1,6 @@
 <%= tag.tr id: dom_id(feature) do %>
     <td class="pv3 pr3 bb b--black-20"><%= link_to feature.title, feature_path(feature.id) %></td>
     <td class="pv3 pr3 bb b--black-20"><%= feature.release %></td>
-    <td class="pv3 pr3 bb b--black-20">Joss Whedon</td>
-    <td class="pv3 pr3 bb b--black-20">Robert Downey Jr., Chris Evans, Scarlett Johansson</td>
+    <td class="pv3 pr3 bb b--black-20"><%= feature.director_id %></td>
+    <td class="pv3 pr3 bb b--black-20"><%= feature.actor_ids %></td>
 <% end %>

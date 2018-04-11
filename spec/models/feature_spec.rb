@@ -10,11 +10,11 @@ describe Feature do
     let(:feature_api) {class_double("API::Feature").as_stubbed_const}
     it 'builds a feature from API' do
       expect(feature_api).to receive(:get).with(1) {
-        {id: 1, title: 'Some Movie', release: 2000, director: 1, cast: [2, 3, 4]}
+        {id: 1, title: 'Some Movie', release: 2000, director_id: 1, actor_ids: [2, 3, 4]}
       }
       a_feature = Feature.find(1)
       expect(a_feature).to have_attributes({
-        id: 1, title: 'Some Movie', release: 2000, director: 1, cast: [2, 3, 4]
+        id: 1, title: 'Some Movie', release: 2000, director_id: 1, actor_ids: [2, 3, 4]
       })
       
     end
