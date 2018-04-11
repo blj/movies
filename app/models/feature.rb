@@ -9,5 +9,8 @@ class Feature
   def self.find(feature_id)
     new API::Feature.get(feature_id)
   end
+  def initialize(attributes)
+    super
+  end
 end
 

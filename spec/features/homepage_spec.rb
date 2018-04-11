@@ -4,11 +4,15 @@ require 'rails_helper'
 
 describe 'Homepage' do
   it 'has a title' do
-    visit '/'
-    expect(page).to have_title('Features')
+    VCR.use_cassette 'features_index' do
+      visit '/'
+      expect(page).to have_title('Features')
+    end
   end
   it 'has a menu' do
-    visit '/'
-    expect(page).to have_link('Features', href: '/features')
+    VCR.use_cassette 'features_index' do
+      visit '/'
+      expect(page).to have_link('Features', href: '/features')
+    end
   end
 end

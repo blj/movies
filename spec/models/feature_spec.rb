@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Feature do
-  let(:a_feature) {FactoryBot.build(:feature)}
+  let(:a_feature) {Feature.new FactoryBot.attributes_for(:feature)}
   it 'supports building an object with attributes' do
     expect(a_feature.title).to eq('Some Movie')
     expect(a_feature.release).to eq(2000)
