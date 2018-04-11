@@ -14,6 +14,8 @@ class API::Director
     API::Connection.get('/directors')
   end
   def self.get(id)
-    API::Connection.get("/directors/#{id}")
+    API::Connection.get("/directors/#{id}").tap do |attrs|
+      attrs["movie_ids"] = attrs.delete("movies")
+    end
   end
 end

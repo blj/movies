@@ -14,6 +14,9 @@ class API::Feature
     API::Connection.get('/features')
   end
   def self.get(id)
-    API::Connection.get("/features/#{id}")
+    API::Connection.get("/features/#{id}").tap do |attrs|
+      attrs['director_id'] = attrs.delete('director')
+      attrs['actor_ids'] = attrs.delete('cast')
+    end
   end
 end

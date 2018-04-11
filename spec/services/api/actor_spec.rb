@@ -13,11 +13,11 @@ describe 'Actor' do
       a_actor = API::Actor.get(actor_ids[0])
     end
   }
-  it 'loads id of all movies in an array' do
+  it 'loads id of all actors in an array' do
     expect(actor_ids).kind_of? Array
     expect(actor_ids[0]).kind_of? Integer
   end
   it 'loads an individual actor for an id' do
-    expect(a_actor).to include("id", "name", "movies")
+    expect(a_actor).to include("id", "name", "movie_ids")
   end
 end

@@ -13,11 +13,11 @@ describe 'Director' do
       a_director = API::Director.get(director_ids[0])
     end
   }
-  it 'loads id of all movies in an array' do
+  it 'loads id of all directors in an array' do
     expect(director_ids).kind_of? Array
     expect(director_ids[0]).kind_of? Integer
   end
   it 'loads an individual director for an id' do
-    expect(a_director).to include("id", "name", "movies")
+    expect(a_director).to include("id", "name", "movie_ids")
   end
 end

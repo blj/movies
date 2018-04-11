@@ -18,6 +18,6 @@ describe 'Feature' do
     expect(feature_ids[0]).kind_of? Integer
   end
   it 'loads an individual feature for an id' do
-    expect(a_feature).to include("id", "title", "release", "director", "cast")
+    expect(a_feature).to include("id", "title", "release", "director_id", "actor_ids")
   end
 end
