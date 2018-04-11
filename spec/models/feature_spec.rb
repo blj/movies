@@ -9,10 +9,10 @@ describe Feature do
   context "uses API" do  
     it 'builds a feature from API' do
       feature_api = class_double("API::Feature").as_stubbed_const
-      expect(feature_api).to receive(:get).with(1) {
+      expect(feature_api).to receive(:get).with(783982) {
         {id: 1, title: 'Some Movie', release: 2000, director_id: 1, actor_ids: [2, 3, 4]}
       }
-      a_feature = Feature.find(1)
+      a_feature = Feature.find(783982)
       expect(a_feature).to have_attributes({
         id: 1, title: 'Some Movie', release: 2000, director_id: 1, actor_ids: [2, 3, 4]
       })
@@ -20,7 +20,7 @@ describe Feature do
     end
     it 'builds all features from API' do
       feature_api = class_double("API::Feature").as_stubbed_const
-      feature_ids = [2, 3, 4]
+      feature_ids = [23232, 332432, 432234]
       expect(feature_api).to receive(:ids).twice {feature_ids}
       feature_ids.each do |id|
         expect(feature_api).to receive(:get).once.with(id) {
