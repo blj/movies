@@ -21,6 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'faraday', '~> 0.14.0'
 gem 'faraday_middleware', '~> 0.12.2'
+gem 'faraday-http-cache', '~> 2.0.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password

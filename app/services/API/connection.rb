@@ -4,6 +4,8 @@ class API::Connection
   end
   def self.connection
     @@connection ||= Faraday.new url: host do |f|
+      # Upstream does not have appropriate CACHE CONTROL, so disabling cache
+      # f.use :http_cache, store: Rails.cache, serializer: Marshal, logger: Rails.logger
       f.response :json
       f.adapter Faraday.default_adapter
     end
