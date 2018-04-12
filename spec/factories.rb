@@ -1,15 +1,8 @@
 FactoryBot.define do
-  # factory :actor do
-  #   name "Some Actor"
-  # end
-  # factory :director do
-  #   name "Some Director"
-  # end
-
   factory :feature do
-    title "Some Movie"
+    title 'Some Movie'
     release 2000
-    # director
+    # director_id attributes_for(:director)[:id]
     # cast [actor, actor, actor]
   end
 end
