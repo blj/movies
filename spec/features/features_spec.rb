@@ -57,5 +57,20 @@ describe 'Features' do
       expect(feature_1_page).to have_title('Hot Fuzz')
       expect(feature_2_page).to have_title("Simon's Cam")
     end
+    it 'shows information about the correct movie' do
+      expect(feature_1_page).to have_selector('h2', 'Hot Fuzz')
+      within('#release') do 
+        expect(feature_1_page).to have_text('2000')
+      end
+      within('p#director') do
+        expect(feature_1_page).to have_text('Edgar Wright')
+      end
+      within('#cast') do
+        expect(feature_1_page).to have_selector('li', count: 3)
+        expect(feature_1_page).to have_text('Simon Pegg')
+        expect(feature_1_page).to have_text('Nick Frost')
+        expect(feature_1_page).to have_text('Martin Freeman')
+      end
+    end
   end
 end

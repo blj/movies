@@ -1,1 +1,10 @@
 <%= title @feature.title%>
+<p id="release">Released in the year <%= @feature.release %>.</p>
+<h3>Director</h3>
+<p id="director"><%= @feature.director %></p>
+<h3>Cast</h3>
+<ul id='cast'>
+    <%- @feature.actors.each do |actor| -%>
+    <li><%= actor %></li>
+    <%- end -%>
+</ul>
