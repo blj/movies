@@ -1,12 +1,18 @@
 class Base
   include ActiveModel::Model
   class << self
-    def find(id)
-      object = collection[id]
-      return object unless object.blank?
-      new(resource.get(id)).tap do |new_object|
-        collection[new_object.id] = new_object
-        perform_callbacks(new_object)
+    def find(arg)
+      case arg
+      when Array
+        arg.map{|item| find(item)}
+      else
+        id = arg
+        object = collection[id]
+        return object unless object.blank?
+        new(resource.get(id)).tap do |new_object|
+          collection[new_object.id] = new_object
+          perform_callbacks(new_object)
+        end
       end
     end
     def all

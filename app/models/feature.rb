@@ -10,5 +10,6 @@ class Feature < Base
   private
   def load_associations
     self.director = Director.find(director_id)
+    self.actors = Actor.find(actor_ids)
   end
 end
