@@ -25,6 +25,13 @@ describe 'Features' do
         expect(page).to have_text('2013')
       end
     end
+    it 'has director information' do
+      within('#feature_1') do
+        expect(page).to have_text('Edgar Wright')
+      end
+    end
+  end
+  context 'filter' do
     it 'can filter feature by director'
     it 'can filter feature by actor'
   end
