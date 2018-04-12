@@ -3,4 +3,12 @@ class Feature < Base
   def self.resource
     API::Feature
   end
+  after_find :load_associations
+  def to_s
+    title
+  end
+  private
+  def load_associations
+    self.director = Director.find(director_id)
+  end
 end
