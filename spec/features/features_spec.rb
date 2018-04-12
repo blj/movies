@@ -30,6 +30,11 @@ describe 'Features' do
         expect(page).to have_text('Edgar Wright')
       end
     end
+    it 'has actors listing' do
+      within('#feature_1') do
+        expect(page).to have_text('Simon Pegg, Nick Frost, and Martin Freeman')
+      end
+    end
   end
   context 'filter' do
     it 'can filter feature by director'
