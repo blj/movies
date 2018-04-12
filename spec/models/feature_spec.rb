@@ -18,7 +18,7 @@ describe Feature do
       })
       
     end
-    it 'builds all features from API' do
+    it 'builds all features from API and caches' do
       feature_api = class_double("API::Feature").as_stubbed_const
       feature_ids = [23232, 332432, 432234]
       expect(feature_api).to receive(:ids).twice {feature_ids}
@@ -28,7 +28,7 @@ describe Feature do
         }
       end
       features = Feature.all()
-      featuers = Feature.all()
+      features = Feature.all()
       
       expect(features.count).to eq(3)
     end
