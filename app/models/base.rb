@@ -1,5 +1,4 @@
 class Base
-  include ActiveModel::Model
   class << self
     def find(arg)
       case arg

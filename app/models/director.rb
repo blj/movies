@@ -1,9 +1,5 @@
-class Director < Base
-  attr_accessor :id, :name, :feature_ids
+class Director < Person
   def self.resource
     API::Director
-  end
-  def to_s
-    name
   end
 end
