@@ -22,15 +22,15 @@ class Base
     def resource
       raise NotImplementedError
     end
-    def after_find(method_symbol)
+    def after_find(method_name)
       @after_find_callbacks ||= []
-      @after_find_callbacks << method_symbol
+      @after_find_callbacks << method_name
     end
     private
     def perform_callbacks(object)
       unless @after_find_callbacks.blank?
-        @after_find_callbacks.each do |method_symbol|
-          object.send method_symbol
+        @after_find_callbacks.each do |method|
+          object.send method.to_sym
         end
       end
     end
