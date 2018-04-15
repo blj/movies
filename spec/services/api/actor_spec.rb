@@ -18,7 +18,7 @@ describe 'Actor' do
     expect(actor_ids[0]).kind_of? Integer
   end
   it 'loads an individual actor for an id' do
-    expect(a_actor).to include("id", "name", "feature_ids")
+    expect(a_actor).to include(:id, :name, :feature_ids)
   end
   context 'when not available' do
     let(:unavailable_actor) {

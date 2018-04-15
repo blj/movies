@@ -12,7 +12,7 @@ class API::Connection
   def self.get resource
     resp = connection.get(resource)
     if resp.status == 200
-      JSON.parse(resp.body)
+      JSON.parse(resp.body, symbolize_names: true)
     end
   end
 end

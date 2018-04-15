@@ -18,7 +18,7 @@ describe 'Feature' do
     expect(feature_ids[0]).kind_of? Integer
   end
   it 'loads an individual feature for an id' do
-    expect(a_feature).to include("id", "title", "release", "director_id", "actor_ids")
+    expect(a_feature).to include(:id, :title, :release, :director_id, :actor_ids)
   end
   context 'when not available' do
     let(:unavailable_feature) {

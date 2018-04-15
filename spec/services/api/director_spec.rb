@@ -18,7 +18,7 @@ describe 'Director' do
     expect(director_ids[0]).kind_of? Integer
   end
   it 'loads an individual director for an id' do
-    expect(a_director).to include("id", "name", "feature_ids")
+    expect(a_director).to include(:id, :name, :feature_ids)
   end
   context 'when not available' do
     let(:unavailable_director) {
