@@ -15,7 +15,6 @@ class API::Feature
   end
   def self.get(id)
     API::Connection.get("/features/#{id}").tap do |attrs|
-      pp attrs
       unless attrs.blank?
         attrs[:director_id] = attrs.delete(:director)
         attrs[:actor_ids] = attrs.delete(:cast)
