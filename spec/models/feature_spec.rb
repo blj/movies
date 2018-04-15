@@ -12,19 +12,19 @@ describe Feature do
   context 'when building' do  
     it 'uses API' do
       expect(api).to receive(:get).with('/features/783982') {
-        {"id":1,"title":"Hot Fuzz","release":2000,"director":1,"cast":[2,3,4]}
+        {"id":1,"title":"Hot Fuzz","release":2000,"director":1011,"cast":[2011,3011,4011]}
       }
-      expect(api).to receive(:get).with('/actors/1')
-      expect(api).to receive(:get).with('/directors/1')
-      expect(api).to receive(:get).with('/actors/2')
-      expect(api).to receive(:get).with('/directors/2')
-      expect(api).to receive(:get).with('/actors/3')
-      expect(api).to receive(:get).with('/directors/3')
-      expect(api).to receive(:get).with('/actors/4')
-      expect(api).to receive(:get).with('/directors/4')
+      expect(api).to receive(:get).with('/actors/1011')
+      expect(api).to receive(:get).with('/directors/1011')
+      expect(api).to receive(:get).with('/actors/2011')
+      expect(api).to receive(:get).with('/directors/2011')
+      expect(api).to receive(:get).with('/actors/3011')
+      expect(api).to receive(:get).with('/directors/3011')
+      expect(api).to receive(:get).with('/actors/4011')
+      expect(api).to receive(:get).with('/directors/4011')
       a_feature = Feature.find(783982)
       expect(a_feature).to have_attributes({
-        id: 1, title: 'Hot Fuzz', release: 2000, director_id: 1, actor_ids: [2, 3, 4]
+        id: 1, title: 'Hot Fuzz', release: 2000, director_id: 1011, actor_ids: [2011, 3011, 4011]
       })
       
     end

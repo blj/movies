@@ -1,16 +1,14 @@
 class Feature < Base
   include ActiveModel::Model
-  attr_accessor :id, :title, :release, :director_id, :actor_ids, :director, :actors 
-  def self.resource
-    API::Feature
-  end
+  attr_accessor :id, :title, :release, :director_id, :actor_ids, :director, :actors
+  build_using API::Feature
   after_find :load_associations
   def to_s
     title
   end
   private
   def load_associations
-    self.director = Director.find(director_id)
-    self.actors = Actor.find(actor_ids)
+    self.director = Person.find(director_id) unless director_id.blank?
+    self.actors = Person.find(actor_ids) unless actor_ids.blank?
   end
 end
