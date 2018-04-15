@@ -9,29 +9,29 @@ describe Person do
   context 'uses API' do
     let(:api){class_double('API::Connection').as_stubbed_const}
     it 'uses API' do
-      expect(api).to receive(:get).with('/actors/1')
-      expect(api).to receive(:get).with('/directors/1')
-      Person.find(1)
+      expect(api).to receive(:get).with('/actors/1089')
+      expect(api).to receive(:get).with('/directors/1089')
+      Person.find(1089)
     end
     context 'to sets its name' do
       it 'from actor' do
-        expect(api).to receive(:get).with('/actors/1') {
-          {'id': 1, 'name': 'Some Name'}
+        expect(api).to receive(:get).with('/actors/1099') {
+          {'id': 1099, 'name': 'Some Name'}
         }
-        expect(api).to receive(:get).with('/directors/1') {
+        expect(api).to receive(:get).with('/directors/1099') {
           nil
         }
-        person = Person.find(1)
+        person = Person.find(1099)
         expect(person.name).to eq('Some Name')
       end
       it 'from director' do
-        expect(api).to receive(:get).with('/actors/2') {
+        expect(api).to receive(:get).with('/actors/2089') {
           nil
         }
-        expect(api).to receive(:get).with('/directors/2') {
-          {'id': 2, 'name': 'Some Other Name'}
+        expect(api).to receive(:get).with('/directors/2089') {
+          {'id': 2089, 'name': 'Some Other Name'}
         }
-        person = Person.find(2)
+        person = Person.find(2089)
         expect(person.name).to eq('Some Other Name')
       end
     end
