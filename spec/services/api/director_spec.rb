@@ -30,5 +30,4 @@ describe 'Director' do
       expect(unavailable_director).to be_nil
     end
   end
-  
 end
