@@ -13,11 +13,6 @@ describe 'Actor' do
       API::Actor.get(actor_ids[0])
     end
   }
-  let(:unavailable_actor) {
-    VCR.use_cassette 'actors[-2]' do
-      API::Actor.get(-2)
-    end
-  }
   it 'loads id of all actors in an array' do
     expect(actor_ids).kind_of? Array
     expect(actor_ids[0]).kind_of? Integer
@@ -26,6 +21,11 @@ describe 'Actor' do
     expect(a_actor).to include("id", "name", "feature_ids")
   end
   context 'when not available' do
+    let(:unavailable_actor) {
+      VCR.use_cassette 'actors[-2]' do
+        API::Actor.get(-2)
+      end
+    }
     it 'returns blank' do
       expect(unavailable_actor).to be_nil
     end
