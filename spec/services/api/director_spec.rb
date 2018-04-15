@@ -10,7 +10,7 @@ describe 'Director' do
   }
   let(:a_director) {
     VCR.use_cassette 'directors[0]' do
-      a_director = API::Director.get(director_ids[0])
+      API::Director.get(director_ids[0])
     end
   }
   it 'loads id of all directors in an array' do
@@ -20,4 +20,15 @@ describe 'Director' do
   it 'loads an individual director for an id' do
     expect(a_director).to include("id", "name", "feature_ids")
   end
+  context 'when not available' do
+    let(:unavailable_director) {
+      VCR.use_cassette 'directors[-2]' do
+        API::Director.get(-2)
+      end
+    }
+    it 'returns blank' do
+      expect(unavailable_director).to be_nil
+    end
+  end
+  
 end
