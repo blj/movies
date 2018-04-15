@@ -15,7 +15,7 @@ class API::Actor
   end
   def self.get(id)
     API::Connection.get("/actors/#{id}").tap do |attrs|
-      attrs['feature_ids'] = attrs.delete('movies')
+      attrs["feature_ids"] = attrs.delete("movies") unless attrs.blank?
     end
   end
 end

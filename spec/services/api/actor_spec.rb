@@ -10,7 +10,12 @@ describe 'Actor' do
   }
   let(:a_actor) {
     VCR.use_cassette 'actors[0]' do
-      a_actor = API::Actor.get(actor_ids[0])
+      API::Actor.get(actor_ids[0])
+    end
+  }
+  let(:unavailable_actor) {
+    VCR.use_cassette 'actors[-2]' do
+      API::Actor.get(-2)
     end
   }
   it 'loads id of all actors in an array' do
@@ -19,5 +24,10 @@ describe 'Actor' do
   end
   it 'loads an individual actor for an id' do
     expect(a_actor).to include("id", "name", "feature_ids")
+  end
+  context 'when not available' do
+    it 'returns blank' do
+      expect(unavailable_actor).to be_nil
+    end
   end
 end
