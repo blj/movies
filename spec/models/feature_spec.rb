@@ -26,7 +26,6 @@ describe Feature do
       expect(a_feature).to have_attributes({
         id: 1, title: 'Hot Fuzz', release: 2000, director_id: 1011, actor_ids: [2011, 3011, 4011]
       })
-      
     end
     it 'first time uses API and then caches' do
       feature_ids = [23232, 332432, 432234]
