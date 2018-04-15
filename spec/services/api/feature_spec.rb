@@ -10,7 +10,7 @@ describe 'Feature' do
   }
   let(:a_feature) {
     VCR.use_cassette 'features[0]' do
-      a_feature = API::Feature.get(feature_ids[0])
+      API::Feature.get(feature_ids[0])
     end
   }
   it 'loads id of all movies in an array' do
@@ -19,5 +19,15 @@ describe 'Feature' do
   end
   it 'loads an individual feature for an id' do
     expect(a_feature).to include("id", "title", "release", "director_id", "actor_ids")
+  end
+  context 'when not available' do
+    let(:unavailable_feature) {
+      VCR.use_cassette 'features[-2]' do
+        API::Feature.get(-2)
+      end
+    }
+    it 'returns blank' do
+      expect(unavailable_feature).to be_nil
+    end
   end
 end
