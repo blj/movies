@@ -1,6 +1,5 @@
 class Feature < Base
-  include ActiveModel::Model
-  attr_accessor :id, :title, :release, :director_id, :actor_ids, :director, :actors
+  attr_accessor :title, :release, :director_id, :actor_ids, :director, :actors
   build_using API::Feature
   after_find :load_associations
   def to_s

@@ -38,7 +38,6 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'webmock', '~> 3.3.0'
   gem 'vcr', '~> 4.0.0'
-  gem 'factory_bot', '~> 4.8.2'
 end
 
 group :development do

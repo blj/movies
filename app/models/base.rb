@@ -1,4 +1,6 @@
 class Base
+  include ActiveModel::Model
+  attr_accessor :id
   class << self
     def find(arg)
       case arg
@@ -14,25 +16,27 @@ class Base
         end
       end
     end
-    def build_using api
+    def build_using api, options = {}
       resources << api
-    end
-    def resources
-      @resources ||= []
+      api_options.merge!(options)
     end
     def all
       ids_from_all_resources.map do |id|
         find(id)
       end
     end
-    def resource
-      raise NotImplementedError
-    end
     def after_find(method_name)
       @after_find_callbacks ||= []
       @after_find_callbacks << method_name
     end
+
     private
+    def resources
+      @resources ||= []
+    end
+    def api_options
+      @api_options ||= {}
+    end
     def ids_from_all_resources
       resources.collect do |res|
         res.ids
