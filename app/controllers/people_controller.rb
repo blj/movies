@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
   def index
-    @people = [Person.new(name: 'Simon Pegg')]
+    @people = Person.all
   end
 end

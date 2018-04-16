@@ -14,6 +14,7 @@ describe 'People' do
     it 'lists actor names' do
       within('#people') do
         expect(page).to have_text('Simon Pegg')
+        expect(page).to have_text('Nick Frost')
       end
     end
   end
