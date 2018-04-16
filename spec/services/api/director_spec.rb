@@ -27,7 +27,9 @@ describe 'Director' do
       end
     }
     it 'returns blank' do
-      expect(unavailable_director).to be_nil
+      expect {
+        unavailable_director
+      }.to raise_error(API::ResourceNotFound)
     end
   end
 end

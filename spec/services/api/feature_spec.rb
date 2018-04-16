@@ -27,7 +27,9 @@ describe 'Feature' do
       end
     }
     it 'returns blank' do
-      expect(unavailable_feature).to be_nil
+      expect{
+        unavailable_feature
+      }.to raise_error(API::ResourceNotFound)
     end
   end
 end

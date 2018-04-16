@@ -26,8 +26,10 @@ describe 'Actor' do
         API::Actor.get(-2)
       end
     }
-    it 'returns blank' do
-      expect(unavailable_actor).to be_nil
+    it 'raises RecordNotFound' do
+      expect {
+        unavailable_actor
+      }.to raise_error(API::ResourceNotFound)
     end
   end
 end
