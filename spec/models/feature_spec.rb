@@ -9,21 +9,26 @@ describe Feature do
   }
   context 'when building' do  
     it 'uses API' do
+      person_class = class_double('Person').as_stubbed_const
       expect(api).to receive(:get).with('/features/783982') {
-        {"id":1,"title":"Hot Fuzz","release":2000,"director":1011,"cast":[2011,3011,4011]}
+        {"id":783982,"title":"Hot Fuzz","release":2000,"director":1011,"cast":[2011,3011,4011]}
       }
-      expect(api).to receive(:get).with('/actors/1011') { {id: 1011} }
-      expect(api).to receive(:get).with('/directors/1011') { {id: 1011} }
-      expect(api).to receive(:get).with('/actors/2011') { {id: 2011} }
-      expect(api).to receive(:get).with('/directors/2011') { {id: 2011} }
-      expect(api).to receive(:get).with('/actors/3011') { {id: 3011} }
-      expect(api).to receive(:get).with('/directors/3011') { {id: 3011} }
-      expect(api).to receive(:get).with('/actors/4011') { {id: 4011} }
-      expect(api).to receive(:get).with('/directors/4011') { {id: 4011} }
+      expect(person_class).to receive(:find).with(1011)
+      expect(person_class).to receive(:find).with([2011,3011,4011])
       a_feature = Feature.find(783982)
       expect(a_feature).to have_attributes({
-        id: 1, title: 'Hot Fuzz', release: 2000, director_id: 1011, actor_ids: [2011, 3011, 4011]
+        id: 783982, title: 'Hot Fuzz', release: 2000, director_id: 1011, actor_ids: [2011, 3011, 4011]
       })
+    end
+    it 'associated object is not found' do
+      expect(api).to receive(:get).with('/features/7853') {
+        {"id":7853,"title":"Hot Fuzz","release":2000,"director":7011,"cast":[]}
+      }
+      expect(api).to receive(:get).with('/directors/7011') { {"id": 7011, name: "Some Director"} }
+      expect(api).to receive(:get).with('/actors/7011') {
+        raise API::ResourceNotFound.new
+      }
+      a_feature = Feature.find(7853)
     end
     context 'a resource is not found' do
       it 'throws record not found error' do
@@ -55,27 +60,27 @@ describe Feature do
       allow(person_class).to receive(:find).with(2323) {
         director
       }
-      allow(api).to receive(:get).with('/features/783982') {
-        {id: 783982, director: 2323}
+      allow(api).to receive(:get).with('/features/7832') {
+        {id: 7832, director: 2323}
       }
-      a_feature = Feature.find(783982)
+      a_feature = Feature.find(7832)
       expect(a_feature.director).to eq(director)
     end
     it 'loads correct association for actors' do
       api = class_double('API::Connection').as_stubbed_const
       person_class = class_double('Person').as_stubbed_const
-      actor_2001 = double("actor 2001")
-      actor_3001 = double("actor 3001")
-      actor_4001 = double("actor 4001")
-      allow(person_class).to receive(:find).with([2001, 3001, 4001]) { 
-        [actor_2001, actor_3001, actor_4001]
+      actor_1 = double("actor 1")
+      actor_2 = double("actor 2")
+      actor_3 = double("actor 3")
+      allow(person_class).to receive(:find).with([801, 802, 803]) {
+        [actor_1, actor_2, actor_3]
       }
 
-      expect(api).to receive(:get).with('/features/7832') {
-        {id: 7832, cast: [2001, 3001, 4001]}
+      expect(api).to receive(:get).with('/features/782') {
+        {id: 782, cast: [801, 802, 803]}
       }
-      a_feature = Feature.find(7832)
-      expect(a_feature.actors).to include(actor_2001, actor_3001, actor_4001)
+      a_feature = Feature.find(782)
+      expect(a_feature.actors).to include(actor_1, actor_2, actor_3)
     end
   end
 end
