@@ -6,10 +6,51 @@ describe Person do
   end
   context 'uses API' do
     let(:api){class_double('API::Connection').as_stubbed_const}
-    it 'uses API' do
-      expect(api).to receive(:get).with('/actors/1089')
-      expect(api).to receive(:get).with('/directors/1089')
-      Person.find(1089)
+    context 'to build' do
+      it 'with both actor and director' do
+        expect(api).to receive(:get).with('/actors/1089') { {id: 1089} }
+        expect(api).to receive(:get).with('/directors/1089') { {id: 1089} }
+        Person.find(1089)
+      end
+    end
+    context 'when neither actor nor director is found' do
+      it 'throws record not found error' do
+        expect(api).to receive(:get).with('/actors/392'){
+          raise API::ResourceNotFound
+        }
+        expect(api).to receive(:get).with('/directors/392'){
+          raise API::ResourceNotFound
+        }
+        expect {
+          Person.find(392)
+        }.to raise_error(Error::RecordNotFound)
+      end
+    end
+    context 'using at least one resource' do
+      it 'builds the person with actor' do
+        expect(api).to receive(:get).with('/actors/3920'){
+          {id: 3920}
+        }
+        expect(api).to receive(:get).with('/directors/3920'){
+          raise API::ResourceNotFound
+        }
+        expect {
+          Person.find(3920)
+        }.not_to raise_error
+      end
+    end
+    context 'using at least one resource' do
+      it 'builds the person with director' do
+        expect(api).to receive(:get).with('/actors/3921'){
+          raise API::ResourceNotFound
+        }
+        expect(api).to receive(:get).with('/directors/3921'){
+          {id: 3921}
+        }
+        expect {
+          Person.find(3921)
+        }.not_to raise_error
+      end
     end
     context 'to set its name' do
       it 'from actor' do

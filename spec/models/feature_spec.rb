@@ -12,18 +12,28 @@ describe Feature do
       expect(api).to receive(:get).with('/features/783982') {
         {"id":1,"title":"Hot Fuzz","release":2000,"director":1011,"cast":[2011,3011,4011]}
       }
-      expect(api).to receive(:get).with('/actors/1011')
-      expect(api).to receive(:get).with('/directors/1011')
-      expect(api).to receive(:get).with('/actors/2011')
-      expect(api).to receive(:get).with('/directors/2011')
-      expect(api).to receive(:get).with('/actors/3011')
-      expect(api).to receive(:get).with('/directors/3011')
-      expect(api).to receive(:get).with('/actors/4011')
-      expect(api).to receive(:get).with('/directors/4011')
+      expect(api).to receive(:get).with('/actors/1011') { {id: 1011} }
+      expect(api).to receive(:get).with('/directors/1011') { {id: 1011} }
+      expect(api).to receive(:get).with('/actors/2011') { {id: 2011} }
+      expect(api).to receive(:get).with('/directors/2011') { {id: 2011} }
+      expect(api).to receive(:get).with('/actors/3011') { {id: 3011} }
+      expect(api).to receive(:get).with('/directors/3011') { {id: 3011} }
+      expect(api).to receive(:get).with('/actors/4011') { {id: 4011} }
+      expect(api).to receive(:get).with('/directors/4011') { {id: 4011} }
       a_feature = Feature.find(783982)
       expect(a_feature).to have_attributes({
         id: 1, title: 'Hot Fuzz', release: 2000, director_id: 1011, actor_ids: [2011, 3011, 4011]
       })
+    end
+    context 'a resource is not found' do
+      it 'throws record not found error' do
+        expect(api).to receive(:get).with('/features/392'){
+          raise API::ResourceNotFound
+        }
+        expect {
+          Feature.find(392)
+        }.to raise_error(Error::RecordNotFound)
+      end
     end
     it 'first time uses API and then caches' do
       feature_ids = [23232, 332432, 432234]

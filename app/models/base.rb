@@ -5,15 +5,9 @@ class Base
     def find(arg)
       case arg
       when Array
-        arg.map{|item| find(item)}
-      else
-        id = arg
-        object = collection[id]
-        return object unless object.blank?
-        new(get_from_all_resources(id)).tap do |new_object|
-          collection[new_object.id] = new_object
-          perform_callbacks(new_object)
-        end
+        arg.map{|item| find_one(item)}
+      when Integer
+        find_one(arg)
       end
     end
     def build_using api, options = {}
@@ -37,16 +31,40 @@ class Base
     def api_options
       @api_options ||= {}
     end
+
+    def find_one(id)
+      object = collection[id]
+      return object unless object.blank?
+      new(get_from_all_resources(id)).tap do |new_object|
+        collection[new_object.id] = new_object
+        perform_callbacks(new_object)
+      end
+    end
     def ids_from_all_resources
-      resources.collect do |res|
+      ensure_resources.collect do |res|
         res.ids
       end.flatten
     end
     def get_from_all_resources(id)
-      stuff = resources.collect do |res|
-        res.get(id)
+      stuff = ensure_resources.collect do |res|
+        begin
+          res.get(id)
+        rescue API::ResourceNotFound
+          nil
+        end
+      end.compact
+      unless stuff.blank?
+        stuff.reduce({}, :merge) unless stuff.blank?
+      else
+        raise Error::RecordNotFound.new("#{id} is not found in any resource #{resources.join(',')}")
       end
-      stuff.compact.reduce({}, :merge) unless stuff.blank?
+    end
+    def ensure_resources
+      if resources.blank?
+        raise Error::ResourcesNotSet.new('a resource must be set with build_using')
+      else
+        resources
+      end
     end
     def perform_callbacks(object)
       unless @after_find_callbacks.blank?
