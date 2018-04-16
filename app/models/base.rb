@@ -8,6 +8,8 @@ class Base
         arg.map{|item| find_one(item)}
       when Integer
         find_one(arg)
+      when String
+        find_one(arg.to_i)
       end
     end
     def build_using api, options = {}

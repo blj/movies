@@ -20,6 +20,12 @@ describe Feature do
         id: 783982, title: 'Hot Fuzz', release: 2000, director_id: 1011, actor_ids: [2011, 3011, 4011]
       })
     end
+    it 'can find using either String or Integer for ID' do
+      expect(api).to receive(:get).with('/features/9011') { {'id': 9011} }
+      expect(api).to receive(:get).with('/features/9012') { {'id': 9012} }
+      Feature.find(9011)
+      Feature.find('9012')
+    end
     it 'associated object is not found' do
       expect(api).to receive(:get).with('/features/7853') {
         {"id":7853,"title":"Hot Fuzz","release":2000,"director":7011,"cast":[]}
