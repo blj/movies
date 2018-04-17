@@ -80,13 +80,43 @@ describe Person do
           nil
         }
         expect(api).to receive(:get).with('/directors/3089') {
-          {'id': 2089, 'movies': [2001, 2002, 2003]}
+          {'id': 3089, 'movies': [2001, 2002, 2003]}
         }
         person = Person.find(3089)
-        expect(person.directed_ids).not_to be_nil
         expect(person.directed_ids).to include(2001, 2003, 2003)
+        expect(person.acted_ids).to be_nil
       end
       it 'as a cast member' do
+        expect(api).to receive(:get).with('/directors/3029') {
+          nil
+        }
+        expect(api).to receive(:get).with('/actors/3029') {
+          {'id': 3029, 'movies': [2001, 2002, 2003]}
+        }
+        person = Person.find(3029)
+        expect(person.directed_ids).to be_nil
+        expect(person.acted_ids).to include(2001, 2003, 2003)
+      end
+      it 'to lazy load the featues when required' do
+        feature_class = class_double('Feature').as_stubbed_const
+        feature_1 = double('movie 1')
+        feature_2 = double('movie 2')
+        feature_3 = double('movie 3')
+        allow(feature_class).to receive(:find).with(2001) { feature_1 }
+        allow(feature_class).to receive(:find).with(2002) { feature_2 }
+        allow(feature_class).to receive(:find).with(2003) { feature_3 }
+        expect(api).to receive(:get).with('/directors/5099') {
+          {'id': 5099, 'movies': [2001, 2002]}
+        }
+        expect(api).to receive(:get).with('/actors/5099') {
+          {'id': 5099, 'movies': [2001, 2003]}
+        }
+        person = Person.find(5099)
+        directed = person.features_directed
+        acted = person.features_acted
+        expect(directed).to contain_exactly(feature_1, feature_2)
+        
+        expect(acted).to contain_exactly(feature_1, feature_3)
         
       end
     end

@@ -1,5 +1,5 @@
           <tr>
               <td class="pv3 pr3 bb b--black-20"><%= person.name %></td>
-              <td class="pv3 pr3 bb b--black-20">Movies Acted</td>
-              <td class="pv3 pr3 bb b--black-20">Movies Directed</td>
+              <td class="pv3 pr3 bb b--black-20"><%= person.features_directed.to_sentence unless person.directed_ids.blank? %></td>
+              <td class="pv3 pr3 bb b--black-20"><%= person.features_acted.to_sentence unless person.acted_ids.blank? %></td>
           </tr>

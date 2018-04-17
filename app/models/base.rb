@@ -12,18 +12,13 @@ class Base
         find_one(arg.to_i)
       end
     end
-    def build_using api, options = {}
-      resources << api
-      api_options.merge!(options)
+    def build_using api, attrs_processor = nil
+      resources << [api, attrs_processor]
     end
     def all
       ids_from_all_resources.map do |id|
         find(id)
       end
-    end
-    def after_find(method_name)
-      @after_find_callbacks ||= []
-      @after_find_callbacks << method_name
     end
 
     private
@@ -39,18 +34,22 @@ class Base
       return object unless object.blank?
       new(get_from_all_resources(id)).tap do |new_object|
         collection[new_object.id] = new_object
-        perform_callbacks(new_object)
       end
     end
     def ids_from_all_resources
-      ensure_resources.collect do |res|
+      ensure_resources.collect do |res, processor|
         res.ids
       end.flatten
     end
     def get_from_all_resources(id)
-      stuff = ensure_resources.collect do |res|
+      stuff = ensure_resources.collect do |res, processor|
         begin
-          res.get(id)
+          if processor.blank?
+            res.get(id)
+          else
+            stuff = res.get(id)
+            processor.call stuff
+          end
         rescue API::ResourceNotFound
           nil
         end
@@ -66,13 +65,6 @@ class Base
         raise Error::ResourcesNotSet.new('a resource must be set with build_using')
       else
         resources
-      end
-    end
-    def perform_callbacks(object)
-      unless @after_find_callbacks.blank?
-        @after_find_callbacks.each do |method|
-          object.send method.to_sym
-        end
       end
     end
     def collection

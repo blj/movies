@@ -1,13 +1,13 @@
 class Feature < Base
-  attr_accessor :title, :release, :director_id, :actor_ids, :director, :actors
+  attr_accessor :title, :release, :director_id, :actor_ids
   build_using API::Feature
-  after_find :load_associations
+  def director
+    Person.find(director_id)
+  end
+  def actors
+    Person.find(actor_ids)
+  end
   def to_s
     title
-  end
-  private
-  def load_associations
-    self.director = Person.find(director_id) unless director_id.blank?
-    self.actors = Person.find(actor_ids) unless actor_ids.blank?
   end
 end

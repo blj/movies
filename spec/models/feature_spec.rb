@@ -13,8 +13,6 @@ describe Feature do
       expect(api).to receive(:get).with('/features/783982') {
         {"id":783982,"title":"Hot Fuzz","release":2000,"director":1011,"cast":[2011,3011,4011]}
       }
-      expect(person_class).to receive(:find).with(1011)
-      expect(person_class).to receive(:find).with([2011,3011,4011])
       a_feature = Feature.find(783982)
       expect(a_feature).to have_attributes({
         id: 783982, title: 'Hot Fuzz', release: 2000, director_id: 1011, actor_ids: [2011, 3011, 4011]
@@ -25,16 +23,6 @@ describe Feature do
       expect(api).to receive(:get).with('/features/9012') { {'id': 9012} }
       Feature.find(9011)
       Feature.find('9012')
-    end
-    it 'associated object is not found' do
-      expect(api).to receive(:get).with('/features/7853') {
-        {"id":7853,"title":"Hot Fuzz","release":2000,"director":7011,"cast":[]}
-      }
-      expect(api).to receive(:get).with('/directors/7011') { {"id": 7011, name: "Some Director"} }
-      expect(api).to receive(:get).with('/actors/7011') {
-        raise API::ResourceNotFound.new
-      }
-      a_feature = Feature.find(7853)
     end
     context 'a resource is not found' do
       it 'throws record not found error' do
