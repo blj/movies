@@ -26,4 +26,30 @@ describe 'People' do
       end
     end
   end
+  context 'show' do
+    before do
+      VCR.use_cassette 'people_show[2]' do
+        visit '/people/2'
+      end
+    end
+    it 'has a title' do
+      expect(page).to have_title('Simon Pegg')
+    end
+    it 'has list of movies directed' do
+      within('#directed') do
+        expect(page).to have_selector('li', count: 1)
+        expect(page).to have_link("Simon's Cam")
+      end
+    end
+    it 'has list of movies cast' do
+      within('#cast') do
+        expect(page).to have_selector('li', count: 5)
+        expect(page).to have_link('Hot Fuzz', href: '/features/1')
+        expect(page).to have_link("Simon's Cam", href: '/features/2')
+        expect(page).to have_link('Shaun of the Dead', href: '/features/3')
+        expect(page).to have_link("The World's End", href: '/features/4')
+        expect(page).to have_link('Star Trek Beyond', href: '/features/6')
+      end
+    end
+  end
 end

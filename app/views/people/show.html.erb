@@ -1,0 +1,17 @@
+<%= title @person.name%>
+<%- unless @person.features_directed.blank? -%>
+    <h3>Directed</h3>
+    <ul id='directed'>
+        <%- @person.features_directed.each do |feature| -%>
+        <li><%= link_to feature, feature_path(feature.id) %> <em><%= feature.release %></em></li>
+        <%- end -%>
+    </ul>
+<%- end -%>
+<%- unless @person.features_acted.blank? -%>
+    <h3>Cast</h3>
+    <ul id='cast'>
+        <%- @person.features_acted.each do |feature| -%>
+        <li><%= link_to(feature.title, feature_path(feature.id)) %> <em><%= feature.release %></em></li>
+        <%- end -%>
+    </ul>
+<%- end -%>

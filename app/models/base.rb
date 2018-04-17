@@ -12,6 +12,9 @@ class Base
         find_one(arg.to_i)
       end
     end
+    def to_param
+      id
+    end
     def build_using api, attrs_processor = nil
       resources << [api, attrs_processor]
     end

@@ -57,13 +57,13 @@ describe 'Features' do
           expect(page).to have_text('2000')
         end
         within('p#director') do
-          expect(page).to have_text('Edgar Wright')
+          expect(page).to have_link('Edgar Wright', href: '/people/1')
         end
         within('#cast') do
           expect(page).to have_selector('li', count: 3)
-          expect(page).to have_text('Simon Pegg')
-          expect(page).to have_text('Nick Frost')
-          expect(page).to have_text('Martin Freeman')
+          expect(page).to have_link('Simon Pegg', href: '/people/2')
+          expect(page).to have_link('Nick Frost', href: '/people/3')
+          expect(page).to have_link('Martin Freeman', href: '/people/4')
         end
       end
     end
