@@ -6,6 +6,30 @@ describe Person do
   end
   context 'uses API' do
     let(:api){class_double('API::Connection').as_stubbed_const}
+    context 'to find all' do
+      it 'from actor and director resources' do
+        actor_ids = [10001, 10003, 10004]
+        director_ids = [10001, 10002, 10005]
+        expect(api).to receive(:get).with('/actors') { actor_ids }
+        expect(api).to receive(:get).with('/directors') { director_ids }
+        allow(api).to receive(:get).with('/actors/10001') { {'id': 10001} }
+        allow(api).to receive(:get).with('/actors/10001') { {'id': 10001} }
+        allow(api).to receive(:get).with('/actors/10002') { {'id': 10002} }
+        allow(api).to receive(:get).with('/actors/10003') { {'id': 10003} }
+        allow(api).to receive(:get).with('/actors/10004') { {'id': 10004} }
+        allow(api).to receive(:get).with('/actors/10005') { {'id': 10005} }
+
+        allow(api).to receive(:get).with('/directors/10001') { {'id': 10001} }
+        allow(api).to receive(:get).with('/directors/10001') { {'id': 10001} }
+        allow(api).to receive(:get).with('/directors/10002') { {'id': 10002} }
+        allow(api).to receive(:get).with('/directors/10003') { {'id': 10003} }
+        allow(api).to receive(:get).with('/directors/10004') { {'id': 10004} }
+        allow(api).to receive(:get).with('/directors/10005') { {'id': 10005} }
+
+        people = Person.all()
+        expect(people.count).to eq(5)
+      end
+    end
     context 'to build' do
       it 'with both actor and director' do
         expect(api).to receive(:get).with('/actors/1089') { {id: 1089} }

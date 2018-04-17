@@ -39,7 +39,7 @@ class Base
     def ids_from_all_resources
       ensure_resources.collect do |res, processor|
         res.ids
-      end.flatten
+      end.flatten.uniq
     end
     def get_from_all_resources(id)
       stuff = ensure_resources.collect do |res, processor|
