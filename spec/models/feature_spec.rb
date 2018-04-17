@@ -7,7 +7,7 @@ describe Feature do
   let (:api) {
     class_double('API::Connection').as_stubbed_const
   }
-  context 'when building' do  
+  context 'when building' do
     it 'uses API' do
       person_class = class_double('Person').as_stubbed_const
       expect(api).to receive(:get).with('/features/783982') {
