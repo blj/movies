@@ -47,6 +47,35 @@ describe Feature do
       expect(features.count).to eq(3)
     end
   end
+  context 'loads all' do
+    before do
+      allow(api).to receive(:get).with('/features') {
+        [20891, 20892, 20893, 20894, 20895, 20896]
+      }
+      allow(api).to receive(:get).with('/features/20891') { {'id': 20891, 'title': 'Feature 1', 'director': 1} }
+      allow(api).to receive(:get).with('/features/20892') { {'id': 20892, 'title': 'Feature 2', 'director': 2} }
+      allow(api).to receive(:get).with('/features/20893') { {'id': 20893, 'title': 'Feature 3', 'director': 1} }
+      allow(api).to receive(:get).with('/features/20894') { {'id': 20894, 'title': 'Feature 4', 'director': 2} }
+      allow(api).to receive(:get).with('/features/20895') { {'id': 20895, 'title': 'Feature 5', 'director': 1} }
+      allow(api).to receive(:get).with('/features/20896') { {'id': 20896, 'title': 'Feature 6', 'director': 3} }      
+    end
+    it 'features without filter' do
+      features = Feature.all
+      expect(features.count).to eq(6)
+      expect(features[0]).to have_attributes(id: 20891, title: 'Feature 1', director_id: 1)
+      expect(features[1]).to have_attributes(id: 20892, title: 'Feature 2', director_id: 2)
+      expect(features[5]).to have_attributes(id: 20896, title: 'Feature 6', director_id: 3)
+    end
+    it 'features by a given director' do
+      features = Feature.all(filter_using: :director_id, filter_value: 2)
+      expect(features.count).to eq(2)
+    end
+    it 'features by any given actor' do
+    end
+    it 'features by all given actor' do
+      
+    end
+  end
   context 'for associated objects' do
     it 'loads correct association for director' do
       person_class = class_double('Person').as_stubbed_const

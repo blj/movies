@@ -18,9 +18,19 @@ class Base
     def build_using api, attrs_processor = nil
       resources << [api, attrs_processor]
     end
-    def all
-      ids_from_all_resources.map do |id|
+    def all(options={})
+      options ||= {}
+      items = ids_from_all_resources.map do |id|
         find(id)
+      end
+      filter_field = options.delete(:filter_using)
+      filter_value = options.delete(:filter_value)
+      unless filter_field.blank?
+        items.select do |item|
+          item[filter_field.to_sym] == filter_value.to_i
+        end
+      else
+        items
       end
     end
 
@@ -73,5 +83,8 @@ class Base
     def collection
       @collection||={}
     end
+  end
+  def [] key
+    send key
   end
 end

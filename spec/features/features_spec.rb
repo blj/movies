@@ -37,7 +37,14 @@ describe 'Features' do
     end
   end
   context 'filter' do
-    it 'can filter feature by director'
+    it 'only lists by a given director' do
+      VCR.use_cassette 'features_index' do
+        visit '/features?filter_using=director_id&filter_value=1'
+        expect(page).to have_selector('tr.feature', count: 4)
+        expect(page).not_to have_selector('td.director', text: 'Simon Pegg')
+        expect(page).to have_selector('td.director', text: 'Edgar Wright')
+      end
+    end
     it 'can filter feature by actor'
   end
   context 'item' do
