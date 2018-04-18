@@ -7,11 +7,11 @@ class FeaturesController < ApplicationController
   end
   private
   def filter
-    unless params[:filter_using].blank?
-      {
-        filter_using: params[:filter_using],
-        filter_value: params[:filter_value]
-      }
+    {}.tap do |options|
+      unless params[:director].blank?
+        options[:filter_using] = :director_id
+        options[:filter_value] = params[:director]
+      end
     end
   end
 end
