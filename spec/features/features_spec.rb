@@ -31,8 +31,10 @@ describe 'Features' do
       end
     end
     it 'has actors listing' do
-      within('#feature_1') do
-        expect(page).to have_text('Simon Pegg, Nick Frost, and Martin Freeman')
+      within('#feature_1 td.cast') do
+        expect(page).to have_link('Simon Pegg', href: '/people/2')
+        expect(page).to have_link('Nick Frost', href: '/people/3')
+        expect(page).to have_link('Martin Freeman', href: '/people/4')
       end
     end
   end

@@ -16,6 +16,8 @@ class Person < Base
       acted_ids.collect do |id|
         Feature.find(id)
       end
+    else
+      []
     end
   end
   def features_directed
@@ -23,6 +25,8 @@ class Person < Base
       directed_ids.collect do |id|
         Feature.find(id)
       end
+    else
+      []
     end
   end
 end

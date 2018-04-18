@@ -1,5 +1,9 @@
 <%= tag.tr id: dom_id(person) do %>
     <td class="name pv3 pr3 bb b--black-20"><%= person.name %></td>
-    <td class="directed pv3 pr3 bb b--black-20"><%= person.features_directed.to_sentence unless person.directed_ids.blank? %></td>
+    <td class="directed pv3 pr3 bb b--black-20">
+        <%- person.features_directed.each do |feature| -%>
+            <%= link_to feature.title, feature_path(feature.id) %>
+        <%- end -%>
+    </td>
     <td class="acted pv3 pr3 bb b--black-20"><%= person.features_acted.to_sentence unless person.acted_ids.blank? %></td>
 <% end %>
