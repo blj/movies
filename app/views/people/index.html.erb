@@ -1,4 +1,4 @@
-<%= title 'Actors and Directors'%>
+<%= title @title || 'Actors and Directors'%>
 <div class="pa4">
   <div class="overflow-auto">
     <table class="f6 w-100 mw8 center" cellspacing="0" id="people">
@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody class="lh-copy">
-          <%= render partial: 'person', collection: @people %>
+          <%= render partial: 'people/person', collection: @people %>
       </tbody>
     </table>
   </div>

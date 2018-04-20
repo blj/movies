@@ -1,4 +1,4 @@
-<%= tag.tr id: dom_id(person) do %>
+<%= tag.tr id: dom_id(person), class: 'person' do %>
     <td class="name pv3 pr3 bb b--black-20"><%= person.name %></td>
     <td class="directed pv3 pr3 bb b--black-20">
         <%- person.features_directed.each do |feature| -%>

@@ -3,19 +3,24 @@
 <div class="pa4">
   <div class="overflow-auto">
       <%- unless @features.blank? -%>
-          <table class="f6 w-100 mw8 center" cellspacing="0">
-            <thead>
-              <tr>
-                <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Title</th>
-                <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Release</th>
-                <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Director</th>
-                <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Cast</th>
-              </tr>
-            </thead>
-            <tbody class="lh-copy">
-                <%= render partial: 'features/feature', collection: @features %>
-            </tbody>
-          </table>
+          <%= form_with url: filtered_people_path, local: true, class: 'center pa4 br2-ns ba b--black-10' do |form|%>
+              <fieldset id="features" class="bn">
+                  <table class="f6 w-100 mw8 center" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Title</th>
+                        <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Release</th>
+                        <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Director</th>
+                        <th class="fw6 bb b--black-20 tl pb3 pr3 bg-white">Cast</th>
+                      </tr>
+                    </thead>
+                    <tbody class="lh-copy">
+                        <%= render partial: 'features/feature', collection: @features %>
+                    </tbody>
+                  </table>
+              </fieldset>
+              <input class="f6 f5-l button-reset pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns" type="submit" value="Show Common Actors">
+          <%- end -%>
       <%- else -%>
       <p>There are no items at this time.</p>
       <%- end -%>

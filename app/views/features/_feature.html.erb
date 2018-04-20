@@ -1,5 +1,8 @@
 <%= tag.tr id: dom_id(feature), class: 'feature' do %>
-    <td class="pv3 pr3 bb b--black-20 title"><%= link_to feature.title, feature_path(feature.id) %></td>
+    <td class="pv3 pr3 bb b--black-20 title">
+        <%= check_box_tag 'feature_ids[]', feature.id, false,  class: 'mr2' %>
+        <%= link_to feature.title, feature_path(feature.id) %>
+    </td>
     <td class="pv3 pr3 bb b--black-20 release"><%= feature.release %></td>
     <td class="pv3 pr3 bb b--black-20 director"><%= link_to feature.director, person_path(feature.director.id) %></td>
     <td class="pv3 pr3 bb b--black-20 cast">

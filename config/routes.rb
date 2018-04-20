@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :features, only: %i{index show}
   resources :filtered_features, only: :create
   resources :people, only: %i{index show}
+  resources :filtered_people, only: :create
 end
