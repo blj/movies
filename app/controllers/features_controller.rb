@@ -1,5 +1,6 @@
 class FeaturesController < ApplicationController
   def index
+    @people = Person.all
     @features = Feature.all(filter)
   end
   def show
