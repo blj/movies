@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-describe 'Features' do  
+describe 'Features' do
   context 'index' do
     before do
       VCR.use_cassette 'features_index' do
         visit '/features'
       end
-    end
+    end 
     it 'shows all features' do
       expect(page).to have_title('Features')
       within('#feature_1') do
@@ -45,6 +45,12 @@ describe 'Features' do
         expect(page).to have_selector('tr.feature', count: 4)
         expect(page).not_to have_selector('td.director', text: 'Simon Pegg')
         expect(page).to have_selector('td.director', text: 'Edgar Wright')
+      end
+    end
+    it 'shows a message when no features are available' do
+      VCR.use_cassette 'features_index' do
+        visit '/features?director=-11'
+        expect(page).to have_text('There are no items at this time.')
       end
     end
     it 'can filter feature by actor'
