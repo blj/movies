@@ -1,16 +1,15 @@
+require_dependency 'set'
 class FilteredFeaturesController < ApplicationController
+  include FilterFeature
   def create
     @people = Person.all
-    @features = Feature.all(filter)
+    @features = filter Feature.all
+    @filter_params = OpenStruct.new(filter_params)
+    
     render 'features/index'
   end
   private
-  def filter
-    {}.tap do |options|
-      unless params[:director].blank?
-        options[:filter_using] = :director_id
-        options[:filter_value] = params[:director]
-      end
-    end
+  def filter_params
+    params.require(:filter).permit(:director_id, any_actor_ids: [], all_actor_ids: [])
   end
 end

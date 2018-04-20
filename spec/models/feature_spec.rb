@@ -66,15 +66,6 @@ describe Feature do
       expect(features[1]).to have_attributes(id: 20892, title: 'Feature 2', director_id: 2)
       expect(features[5]).to have_attributes(id: 20896, title: 'Feature 6', director_id: 3)
     end
-    it 'features by a given director' do
-      features = Feature.all(filter_using: :director_id, filter_value: 2)
-      expect(features.count).to eq(2)
-    end
-    it 'features by any given actor' do
-    end
-    it 'features by all given actor' do
-      
-    end
   end
   context 'for associated objects' do
     it 'loads correct association for director' do

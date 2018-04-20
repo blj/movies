@@ -1,17 +1,25 @@
-<%= form_with scope: :filter, url: filtered_features_path, model: @filter_params,  class: 'center pa4 br2-ns ba b--black-10' do |form|%>
+<%= form_with scope: :filter, url: filtered_features_path, local: true, model: @filter_params, class: 'center pa4 br2-ns ba b--black-10' do |form|%>
     <div class="measure">
-      <label for="director" class="f6 b db mb2">Directed By <span class="normal black-60">(optional)</span></label>
-
-      <select id="director" name="director" class="input-reset ba b--black-20 pa2 mb2 db w-100" aria-describedby="name-desc">
-          <option value="">Choose one</option>
-            <%= options_from_collection_for_select(@people, 'id', 'name', selected: params[:director]) %>
-      </select>
+        <%= form.label :director_id, class: 'f6 b db mb2' do %>
+            Directed By <span class="normal black-60">(optional)</span>
+        <%- end -%>
+        <%= form.select :director_id, @people.collect { |p| [ p.name, p.id ] }, { include_blank: true }, id: :filter_director_id, class: 'input-reset ba b--black-20 pa2 mb2 db w-100', 'aria-describedby': 'name-desc'  %>
       <small id="name-desc" class="f6 black-60 db mb2">Choose a name from the list to filter movies directed by that person.</small>
   </div>
   <fieldset class="bn">
-     <legend class="fw7 mb2">Has Any of these actors</legend>
-     <%= collection_check_boxes('a', 'a', @people, :id, :name) %>
+     <legend class="fw7 mb2">Has any of these actors</legend>
+     <%- checked = @filter_params[:any_actor_ids] if @filter_params -%>
+     <%= form.collection_check_boxes(:any_actor_ids, @people, :id, :name, checked: checked) do |b|
+     b.label(class: 'lh-copy pr2') {b.check_box(class: 'mr2') + b.text}
+     end%>
   </fieldset>
-     
-<input class="f6 f5-l button-reset pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns" type="submit" value="Filter">
+  <fieldset class="bn">
+     <legend class="fw7 mb2">Has all these actors</legend>
+     <%- checked = @filter_params[:all_actor_ids] if @filter_params -%>
+     <%= form.collection_check_boxes(:all_actor_ids, @people, :id, :name, checked: checked) do |b|
+     b.label(class: 'lh-copy pr2') {b.check_box(class: 'mr2') + b.text}
+     end%>
+  </fieldset>
+
+    <input class="f6 f5-l button-reset pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns" type="submit" value="Filter">
 <%- end -%>

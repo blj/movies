@@ -3,8 +3,9 @@
     <td class="pv3 pr3 bb b--black-20 release"><%= feature.release %></td>
     <td class="pv3 pr3 bb b--black-20 director"><%= link_to feature.director, person_path(feature.director.id) %></td>
     <td class="pv3 pr3 bb b--black-20 cast">
-        <%- feature.actors.each do |actor| -%>
-        <%= link_to actor, person_path(actor.id) %>
-        <%- end -%>
+        <%- actor_links = feature.actors.map do |actor|
+            link_to actor, person_path(actor.id)
+        end -%>
+        <%= to_sentence actor_links %>
     </td>
 <% end %>
