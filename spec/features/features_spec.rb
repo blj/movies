@@ -38,23 +38,7 @@ describe 'Features' do
       end
     end
   end
-  context 'filter' do
-    it 'only lists by a given director' do
-      VCR.use_cassette 'features_index' do
-        visit '/features?director=1'
-        expect(page).to have_selector('tr.feature', count: 4)
-        expect(page).not_to have_selector('td.director', text: 'Simon Pegg')
-        expect(page).to have_selector('td.director', text: 'Edgar Wright')
-      end
-    end
-    it 'shows a message when no features are available' do
-      VCR.use_cassette 'features_index' do
-        visit '/features?director=-11'
-        expect(page).to have_text('There are no items at this time.')
-      end
-    end
-    it 'can filter feature by actor'
-  end
+
   context 'item' do
     it 'shows information about the correct movie' do
       VCR.use_cassette 'features_1_2' do
