@@ -6,14 +6,14 @@
         <%= form.select :director_id, @people.collect { |p| [ p.name, p.id ] }, { include_blank: true }, id: :filter_director_id, class: 'input-reset ba b--black-20 pa2 mb2 db w-100', 'aria-describedby': 'name-desc'  %>
       <small id="name-desc" class="f6 black-60 db mb2">Choose a name from the list to filter movies directed by that person.</small>
   </div>
-  <fieldset class="bn">
+  <fieldset class="bn" id="any-actors">
      <legend class="fw7 mb2">Has any of these actors</legend>
      <%- checked = @filter_params[:any_actor_ids] if @filter_params -%>
      <%= form.collection_check_boxes(:any_actor_ids, @people, :id, :name, checked: checked) do |b|
      b.label(class: 'lh-copy pr2') {b.check_box(class: 'mr2') + b.text}
      end%>
   </fieldset>
-  <fieldset class="bn">
+  <fieldset class="bn" id="all-actors">
      <legend class="fw7 mb2">Has all these actors</legend>
      <%- checked = @filter_params[:all_actor_ids] if @filter_params -%>
      <%= form.collection_check_boxes(:all_actor_ids, @people, :id, :name, checked: checked) do |b|

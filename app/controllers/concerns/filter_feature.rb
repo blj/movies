@@ -1,4 +1,4 @@
-require_dependency 'Set'
+require_dependency 'set'
 module FilterFeature
   def filter items
     filter_all_actors filter_any_actors filter_director items
