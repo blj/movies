@@ -1,5 +1,5 @@
 <%= title 'Features'%>
-<%= render partial: 'filter_form' %>
+<%= render partial: 'features/filter_form' %>
 <div class="pa4">
   <div class="overflow-auto">
       <%- unless @features.blank? -%>
@@ -13,7 +13,7 @@
               </tr>
             </thead>
             <tbody class="lh-copy">
-                <%= render partial: 'feature', collection: @features %>
+                <%= render partial: 'features/feature', collection: @features %>
             </tbody>
           </table>
       <%- else -%>
