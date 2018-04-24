@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Base class that provides common functionality for models
 class Base
   include ActiveModel::Model
   attr_accessor :id
@@ -5,27 +8,30 @@ class Base
     def find(arg)
       case arg
       when Array
-        arg.map{|item| find_one(item)}
+        arg.map { |item| find_one(item) }
       when Integer
         find_one(arg)
       when String
         find_one(arg.to_i)
       end
     end
-    def build_using api, attrs_processor = nil
+
+    def build_using(api, attrs_processor = nil)
       resources << [api, attrs_processor]
     end
-    def all(options={})
-      options ||= {}
+
+    def all(_options = {})
       ids_from_all_resources.map do |id|
         find(id)
       end
     end
 
     private
+
     def resources
       @resources ||= []
     end
+
     def api_options
       @api_options ||= {}
     end
@@ -37,42 +43,45 @@ class Base
         collection[new_object.id] = new_object
       end
     end
+
     def ids_from_all_resources
-      ensure_resources.collect do |res, processor|
+      ensure_resources.collect do |res, _processor|
         res.ids
       end.flatten.uniq
     end
+
     def get_from_all_resources(id)
       stuff = ensure_resources.collect do |res, processor|
-        begin
-          if processor.blank?
-            res.get(id)
-          else
-            stuff = res.get(id)
-            processor.call stuff
-          end
-        rescue API::ResourceNotFound
-          nil
+        if processor.blank?
+          res.get(id)
+        else
+          stuff = res.get(id)
+          processor.call stuff
         end
+      rescue API::ResourceNotFound
+        nil
       end.compact
-      unless stuff.blank?
-        stuff.reduce({}, :merge) unless stuff.blank?
-      else
-        raise Error::RecordNotFound.new("#{id} is not found in any resource #{resources.join(',')}")
+
+      if stuff.blank?
+        raise Error::RecordNotFound, "#{id} is not found in any resource\
+        #{resources.join(',')}"
       end
+      stuff.reduce({}, :merge) unless stuff.blank?
     end
+
     def ensure_resources
       if resources.blank?
-        raise Error::ResourcesNotSet.new('a resource must be set with build_using')
-      else
-        resources
+        raise Error::ResourcesNotSet, 'a resource must be set with build_using'
       end
+      resources
     end
+
     def collection
-      @collection||={}
+      @collection ||= {}
     end
   end
-  def [] key
+
+  def [](key)
     send key
   end
 end
