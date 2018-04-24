@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_dependency 'API/feature.rb'
+require_dependency 'API/feature'
 
 # Feature is model that describes a movie
 class Feature < Base
