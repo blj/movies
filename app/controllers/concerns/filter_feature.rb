@@ -7,7 +7,7 @@ module FilterFeature
     if filter_params[:director_id].blank?
       items
     else
-      items.select{|item| item[:director_id] == filter_params[:director_id].to_i}
+      items.select{|item| item.director_id == filter_params[:director_id].to_i}
     end
   end
   def filter_any_actors items

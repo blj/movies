@@ -85,7 +85,4 @@ class Base
     end
   end
 
-  def [](key)
-    send key
-  end
 end
