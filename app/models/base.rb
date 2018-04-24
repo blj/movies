@@ -68,9 +68,9 @@ class Base
       nil
     end
 
-    def process_response_from_api(processor, res)
-      return res if processor.blank? || res.blank?
-      processor.call res
+    def process_response_from_api(processor, response)
+      return response if processor.blank? || response.blank?
+      processor.call response
     end
 
     def ensure_resources
