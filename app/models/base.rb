@@ -52,14 +52,7 @@ class Base
 
     def get_from_all_resources(id)
       stuff = ensure_resources.collect do |res, processor|
-        if processor.blank?
-          res.get(id)
-        else
-          stuff = res.get(id)
-          processor.call stuff
-        end
-      rescue API::ResourceNotFound
-        nil
+        process_response_from_api processor, get_from_a_resource(id, res)
       end.compact
 
       if stuff.blank?
@@ -67,6 +60,17 @@ class Base
         #{resources.join(',')}"
       end
       stuff.reduce({}, :merge) unless stuff.blank?
+    end
+
+    def get_from_a_resource(id, res)
+      res.get(id)
+    rescue API::ResourceNotFound
+      nil
+    end
+
+    def process_response_from_api(processor, res)
+      return res if processor.blank? || res.blank?
+      processor.call res
     end
 
     def ensure_resources
