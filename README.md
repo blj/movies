@@ -43,7 +43,7 @@ Returns a list of all Feature IDs in the database.
 {
 	features: array of Feature IDs
 }
-
+```
 
 GET http://34.216.164.119/features/{ID}
 
@@ -56,6 +56,7 @@ Returns 404 if no document is found matching the specified Feature ID.  If found
 	director: Person ID,
 	cast: array of Person IDs
 }
+```
 
 The director Person ID can be used to lookup a director that endpoint, and the Person IDs in cast can be used to lookup actors at that endpoint.
 
@@ -68,6 +69,7 @@ Returns a list of all actor Person IDs in the database.
 {
 	actors: array of Person IDs
 }
+```
 
 
 GET http://34.216.164.119/actors/{ID}
@@ -79,6 +81,7 @@ Returns 404 if no document is found matching the specified Person ID.  If found,
 	name: string,
 	movies: array of Feature IDs
 }
+```
 
 The Feature IDs in movies can be used to lookup features at that endpoint.
 
@@ -91,7 +94,7 @@ Returns a list of all director Person IDs in the database.
 {
 	directors: array of Person IDs
 }
-
+```
 
 GET http://34.216.164.119/directors/{ID}
 
@@ -102,6 +105,7 @@ Returns 404 if no document is found matching the specified Person ID.  If found,
 	name: string,
 	movies: array of Feature IDs
 }
+```
 
 The Feature IDs in movies can be used to lookup features at that endpoint.
 
