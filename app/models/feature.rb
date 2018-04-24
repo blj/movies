@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_dependency 'API/feature.rb'
+
 # Feature is model that describes a movie
 class Feature < Base
   attr_accessor :title, :release, :director_id, :actor_ids
