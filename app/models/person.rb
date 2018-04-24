@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_dependency 'API/actor'
+require_dependency 'API/director'
 # Person is the model for an actor or a director
 class Person < Base
   attr_accessor :name, :feature_ids, :directed_ids, :acted_ids
