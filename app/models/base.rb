@@ -84,5 +84,4 @@ class Base
       @collection ||= {}
     end
   end
-
 end
