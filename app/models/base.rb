@@ -56,8 +56,8 @@ class Base
       end.compact
 
       if stuff.blank?
-        raise Error::RecordNotFound, "#{id} is not found in any resource\
-        #{resources.join(',')}"
+        raise Error::RecordNotFound,
+              "#{id} is not found in any resource #{resources.join(',')}"
       end
       stuff.reduce({}, :merge) unless stuff.blank?
     end
