@@ -6,7 +6,7 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
-ruby 2.5.0p0
+ruby 2.5.0p or any version above 2.5 should work
 
 * System dependencies
 External Document Store API Endpoint is at http://34.216.164.119
