@@ -22,10 +22,6 @@ Run tests by command `rspec` in project root folder
 
 * Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
-
-* ...
-
 ## Specification
 
 ### Objective
