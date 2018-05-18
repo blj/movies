@@ -20,7 +20,7 @@ class Base
       resources << [api, attrs_processor]
     end
 
-    def all(_options = {})
+    def all
       ids_from_all_resources.map do |id|
         find(id)
       end
