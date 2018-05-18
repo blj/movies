@@ -8,4 +8,7 @@ VCR.configure do |config|
   }
   config.cassette_library_dir = Rails.root.join('spec', 'web_fixtures')
   config.hook_into :faraday
+  config.ignore_request do |request|
+    URI(request.uri).host.match(/mock\.pstmn\.io$/)
+  end
 end
